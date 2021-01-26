@@ -97,7 +97,7 @@
           app: '%s-master' % config.cluster_name,
         },
       },
-      replicas: 1,
+      replicas: 3,
       podManagementPolicy: 'Parallel',
       updateStrategy: {
         type: 'RollingUpdate',
@@ -286,7 +286,7 @@
                 },
                 {
                   name: 'discovery.zen.minimum_master_nodes',
-                  value: '1',
+                  value: '2',
                 },
                 {
                   name: 'discovery.zen.ping.unicast.hosts',
