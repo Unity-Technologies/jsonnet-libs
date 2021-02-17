@@ -3,7 +3,7 @@
   local config = $._config.elasticsearch6,
   local images = $._images.elasticsearch6,
 
-  elasticsearch6: {
+  elasticsearch6+: {
     pod_disruption_budget: {
       apiVersion: 'policy/v1beta1',
       kind: 'PodDisruptionBudget',
