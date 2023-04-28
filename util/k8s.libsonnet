@@ -47,4 +47,32 @@
         },
       }
     ),
+
+  removeCPULimits(krd)::
+    // helper func: type safe std.get()
+    local get(object, field) = if std.isObject(object) then std.get(object, field, {}) else {};
+    // helper func: knocks out the cpu limit if present
+    local patch(c) =
+      if get(get(c, 'resources'), 'limits') != {} then
+        std.mergePatch(c, { resources: { limits: { cpu: null } } })
+      else c;
+    // Deployment like
+    if get(get(get(get(krd, 'spec'), 'template'), 'spec'), 'containers') != {} then
+      krd {
+        spec+: {
+          template+: {
+            spec+: {
+              containers: std.map(patch, super.containers),
+              [if std.objectHas(krd.spec.template.spec, 'initContainers') then 'initContainers']: std.map(patch, super.initContainers),
+            },
+          },
+        },
+      }
+    // CRDs, like prometheus.monitoring.coreos.com
+    else if get(get(get(krd, 'spec'), 'resources'), 'limits') != {} then
+      krd {
+        spec: patch(super.spec),
+      }
+    else
+      krd,
 }
