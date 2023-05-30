@@ -268,7 +268,6 @@
                 ],
                 resources: {
                   limits: {
-                    cpu: '1000m',
                     memory: '2Gi',
                   },
                   requests: {
