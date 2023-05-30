@@ -5,7 +5,7 @@
 
   elasticsearch6+: {
     pod_disruption_budget: {
-      apiVersion: 'policy/v1beta1',
+      apiVersion: 'policy/v1',
       kind: 'PodDisruptionBudget',
       metadata: {
         name: '%s-master-pdb' % config.cluster_name,
